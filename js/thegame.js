@@ -11,8 +11,8 @@ theGame.prototype = {
 		var exit_btn = this.game.add.button(this.game.world.width * 0.5,this.game.world.height * .2,"exit",this.exit,this);
 		exit_btn.anchor.setTo(0.5,0.5);
 
-                bricks = this.game.add.group();
-                bricks.enableBody = true;
+                ground = this.game.add.group();
+                ground.enableBody = true;
                 sheeps = this.game.add.group();
                 sheeps.enableBody = true;
 
@@ -23,7 +23,7 @@ theGame.prototype = {
                 this.game.input.onDown.add(this.fullscreen, this);
 	},
         update: function(){
-                this.game.physics.arcade.collide(sheeps, bricks);
+                this.game.physics.arcade.collide(sheeps, ground);
                 delay-=1;
                 for(var i = 0;i < sheeps.children.length;i++){ 
                     var sheep = sheeps.children[i];
@@ -76,11 +76,15 @@ theGame.prototype = {
             sheep.body.velocity.y = -500;
         },
         load_ground: function(){
-            for(var x=1;x<3;x++){
-                for(var i=0;i< this.game.world.width;i+=64){
-                    var brick = bricks.create(i, this.game.world.height - 64 * x, 'brick');
-                    brick.body.immovable = true;                
-                }
+            //grass
+            for(var i=0;i< this.game.world.width;i+=64){
+                var grass = ground.create(i, this.game.world.height - 128, 'grass');
+                grass.body.immovable = true;                
+            }
+            //dirt
+            for(var i=0;i< this.game.world.width;i+=64){
+                var dirt = ground.create(i, this.game.world.height - 64, 'dirt');
+                dirt.body.immovable = true;                
             }
         }
 
