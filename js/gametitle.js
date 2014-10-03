@@ -37,6 +37,8 @@ gameTitle.prototype = {
         },
 
         load_sheep: function(pl, posx, posy, direction){
+            var x = Math.floor(Math.random() * lamb_snd.length);
+            lamb_snd[x].play(); 
             //animations
             sheep = this.game.add.sprite(posx,posy, pl);
             sheep.animations.add('left', [0, 1, 2, 3], 10, true);

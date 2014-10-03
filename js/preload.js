@@ -19,8 +19,8 @@ preload.prototype = {
             //load other preload stuff here
             //sounds
             this.game.load.audio('click', ['res/sounds/click.mp3','res/sounds/click.ogg']);
-            for(var i = 1;i <= 3 ;i++){
-                this.game.load.audio('touch' + i, ['res/sounds/touch'+i+'.mp3','res/sounds/touch'+i+'.ogg']);
+            for(var i = 2;i <= 4 ;i++){
+                this.game.load.audio('lamb' + i, ['res/sounds/baalamb'+i+'.mp3','res/sounds/baalamb'+i+'.ogg']);
             }
             //music: https://www.youtube.com/watch?v=qFQP_A4Vacc
             this.game.load.audio('music', ['res/music/music.mp3','res/music/music.ogg']);
@@ -44,9 +44,9 @@ preload.prototype = {
   	create: function(){
                 this.game.stage.backgroundColor = 0x00ccff;
                 click = this.game.add.audio("click");
-                touch=[];
-                for(var i = 1;i <= 3 ;i++){
-                    touch.push(this.game.add.audio("touch"+i));
+                lamb_snd=[];
+                for(var i = 2;i <= 4 ;i++){
+                    lamb_snd.push(this.game.add.audio("lamb"+i));
                 }
                 music = this.game.add.audio("music");
                 music.play('',0,0.3,true);
