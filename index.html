@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>My Game</title>
+        <title>Little Bo Peep</title>
         <script src="js/phaser.js"></script>
         <meta name="viewport" content="initial-scale=1 maximum-scale=1 user-scalable=0 minimal-ui" />
     
@@ -10,7 +10,6 @@
         <script src="js/preload.js"></script>
         <script src="js/gametitle.js"></script>
         <script src="js/thegame.js"></script>
-        <script src="js/level1.js"></script>
         <script src="js/gameover.js"></script> 
 
         <style>
@@ -27,14 +26,13 @@
     <body>
         <script>
             (function() {
-                var height = 1280;
-                var width = 720;
+                var height = 720;
+                var width = 1280;
                 var game = new Phaser.Game(width, height, Phaser.AUTO, "game");
                 game.state.add("Boot",boot);
                 game.state.add("Preload",preload);
                 game.state.add("GameTitle",gameTitle);
                 game.state.add("TheGame",theGame);
-                game.state.add("Level1",level1);
                 game.state.add("GameOver",gameOver);
                 game.state.start("Boot")
 

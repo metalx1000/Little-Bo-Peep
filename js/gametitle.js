@@ -9,23 +9,23 @@ gameTitle.prototype = {
 		playButton.anchor.setTo(0.5,0.5);
 
                 this.create_simon();
-                this.main_title();
-                this.load_player("player", 0, 0, "right");
+                //this.main_title();
+                this.load_sheep("sheep", this.game.world.width * 0.2, -100, "right");
 
                 //go full screen on click
                 this.game.input.onDown.add(this.fullscreen, this);
 	},
         update: function(){
-                this.game.physics.arcade.collide(player, simon);
+                this.game.physics.arcade.collide(sheep, simon);
             
-                if(player.position.x > this.game.world.width){
-                    this.load_player("player2", this.game.world.width, 0, "left");
-                }else if(player.position.x < 0){
-                    this.load_player("player", 0, 0, "right");
+                if(sheep.position.x > this.game.world.width){
+                    this.load_sheep("sheep", this.game.world.width * 0.8, -100, "left");
+                }else if(sheep.position.x < 0){
+                    this.load_sheep("sheep", this.game.world.width * 0.2, -100, "right");
                 }
         },
         simonWeb: function(){
-            window.open("http://multi8it.blogspot.com", "_blank");
+            window.open("http://incompetech.com", "_blank");
         },
 	playTheGame: function(){
                 click.play();
@@ -36,21 +36,20 @@ gameTitle.prototype = {
             this.game.scale.startFullScreen();
         },
 
-        load_player: function(pl, posx, posy, direction){
+        load_sheep: function(pl, posx, posy, direction){
             //animations
-            player = this.game.add.sprite(posx,posy, pl);
-            player.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
-            player.animations.add('right', [6, 7, 8, 9, 10, 11], 10, true);
-            this.game.physics.arcade.enable(player);
-            player.body.gravity.y = 500;
-            player.body.bounce.y = 0.2;
-            //player.body.collideWorldBounds = true;
+            sheep = this.game.add.sprite(posx,posy, pl);
+            sheep.animations.add('left', [0, 1, 2, 3], 10, true);
+            sheep.animations.add('right', [4, 5, 6, 7], 10, true);
+            this.game.physics.arcade.enable(sheep);
+            sheep.body.gravity.y = 500;
+            sheep.body.bounce.y = 0.2;
             if(direction == "right"){
-                player.body.velocity.x = 150;
-                player.animations.play('right');
+                sheep.body.velocity.x = 150;
+                sheep.animations.play('right');
             }else{
-                player.animations.play('left');
-                player.body.velocity.x = -150;
+                sheep.animations.play('left');
+                sheep.body.velocity.x = -150;
             }
 
         },

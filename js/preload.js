@@ -26,7 +26,7 @@ preload.prototype = {
             this.game.load.audio('music', ['res/music/music.mp3','res/music/music.ogg']);
 
 	    this.game.load.spritesheet("player","res/sprites/player.png",64,64);
-	    this.game.load.spritesheet("player2","res/sprites/player2.png",64,64);
+	    this.game.load.spritesheet("sheep","res/sprites/sheep.png",128,96);
 	    this.game.load.spritesheet("playerf","res/sprites/playerf.png",128,96);
 	    this.game.load.spritesheet("playerf2","res/sprites/playerf2.png",128,96);
 
@@ -42,6 +42,7 @@ preload.prototype = {
 
 	},
   	create: function(){
+                this.game.stage.backgroundColor = 0x00ccff;
                 click = this.game.add.audio("click");
                 touch=[];
                 for(var i = 1;i <= 3 ;i++){
