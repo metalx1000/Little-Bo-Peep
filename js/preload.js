@@ -18,6 +18,7 @@ preload.prototype = {
             
             //load other preload stuff here
             //sounds
+            this.game.load.audio('poem', ['res/sounds/poem.mp3','res/sounds/poem.ogg']);
             this.game.load.audio('click', ['res/sounds/click.mp3','res/sounds/click.ogg']);
             for(var i = 2;i <= 4 ;i++){
                 this.game.load.audio('lamb' + i, ['res/sounds/baalamb'+i+'.mp3','res/sounds/baalamb'+i+'.ogg']);

@@ -2,6 +2,8 @@ var theGame = function(game){}
 
 theGame.prototype = {
   	create: function(){
+                poem = this.game.add.audio("poem"); 
+                poem.play();
                 delay = 0;
                 this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		var gameTitle = this.game.add.sprite(this.game.world.width * 0.5,this.game.world.height * .1,"game_title");
@@ -11,29 +13,29 @@ theGame.prototype = {
 
                 bricks = this.game.add.group();
                 bricks.enableBody = true;
-                players = this.game.add.group();
-                players.enableBody = true;
+                sheeps = this.game.add.group();
+                sheeps.enableBody = true;
 
                 this.load_ground();
-                this.load_player("player", 0, 0, "right");
+                this.load_sheep("sheep", 0, 0, "right");
 
                 //go full screen on click
                 this.game.input.onDown.add(this.fullscreen, this);
 	},
         update: function(){
-                this.game.physics.arcade.collide(players, bricks);
+                this.game.physics.arcade.collide(sheeps, bricks);
                 delay-=1;
-                for(var i = 0;i < players.children.length;i++){ 
-                    var player = players.children[i];
+                for(var i = 0;i < sheeps.children.length;i++){ 
+                    var sheep = sheeps.children[i];
                     var v = Math.floor(Math.random() * 150) + 50
-                    if(player.position.x > this.game.world.width){
-                        this.load_player("player2", this.game.world.width, 0, "left");
-                        player.body.velocity.x = -v;
-                        player.animations.play('left');                    
-                    }else if(player.position.x < 0){
-                        this.load_player("player", 0, 0, "right");
-                        player.animations.play('right');
-                        player.body.velocity.x = v;
+                    if(sheep.position.x > this.game.world.width){
+                        this.load_sheep("sheep", this.game.world.width, 0, "left");
+                        sheep.body.velocity.x = -v;
+                        sheep.animations.play('left');                    
+                    }else if(sheep.position.x < 0){
+                        this.load_sheep("sheep", 0, 0, "right");
+                        sheep.animations.play('right');
+                        sheep.body.velocity.x = v;
                     }
                 }
         },
@@ -46,32 +48,32 @@ theGame.prototype = {
             this.game.scale.startFullScreen();
         },
 
-        load_player: function(pl, posx, posy, direction){
+        load_sheep: function(pl, posx, posy, direction){
             if(delay<1){
                 delay = 200;
                 //animations
-                var player = players.create(posx, posy, pl);
-                player.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
-                player.animations.add('right', [11,10,9,8,7,6], 10, true);
-                player.body.gravity.y = 500;
-                player.body.bounce.y = 0.2;
-                player.inputEnabled = true;
-                player.events.onInputOver.add(this.player_jump,this);
+                var sheep = sheeps.create(posx, posy, pl);
+                sheep.animations.add('left', [0, 1, 2, 3], 10, true);
+                sheep.animations.add('right', [4, 5, 6, 7], 10, true);
+                sheep.body.gravity.y = 500;
+                sheep.body.bounce.y = 0.2;
+                sheep.inputEnabled = true;
+                sheep.events.onInputOver.add(this.sheep_jump,this);
 
                 if(direction == "right"){
-                    player.body.velocity.x = 150;
-                    player.animations.play('right');
+                    sheep.body.velocity.x = 150;
+                    sheep.animations.play('right');
                 }else{
-                    player.animations.play('left');
-                    player.body.velocity.x = -150;
+                    sheep.animations.play('left');
+                    sheep.body.velocity.x = -150;
                 }
             }
         },
 
-        player_jump: function(player){
-            var x = Math.floor(Math.random() * touch.length);
-            touch[x].play();
-            player.body.velocity.y = -500;
+        sheep_jump: function(sheep){
+            var x = Math.floor(Math.random() * lamb_snd.length);
+            lamb_snd[x].play();
+            sheep.body.velocity.y = -500;
         },
         load_ground: function(){
             for(var x=1;x<3;x++){
