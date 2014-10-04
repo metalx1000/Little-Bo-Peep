@@ -6,7 +6,7 @@ theGame.prototype = {
                 poem.play();
                 delay = 0;
         
-                var world_width = 51200;
+                var world_width = 5120;
                 this.game.world.setBounds(0, 0, world_width, this.game.world.height);
                 this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		var gameTitle = this.game.add.sprite(width * 0.5,this.game.world.height * .1,"game_title");
@@ -21,7 +21,7 @@ theGame.prototype = {
                 sheeps.enableBody = true;
 
                 this.load_ground();
-                for(var i = 0;i<5;i++){
+                for(var i = 0;i<10;i++){
                     var x = Math.floor(Math.random() * world_width * 0.2);
                     this.load_sheep("sheep", x, this.game.world.height - 256, "right");
                 }
@@ -45,7 +45,7 @@ theGame.prototype = {
                 }
 
                 this.game.camera.x = player.position.x - width * 0.5;
-                //this.game.physics.arcade.collide(sheeps, ground);
+                this.game.physics.arcade.collide(sheeps, ground);
                 this.game.physics.arcade.collide(player, ground);
                 if(delay<0){
                     this.game.physics.arcade.overlap(player, sheeps, this.sheep_jump, null, this);

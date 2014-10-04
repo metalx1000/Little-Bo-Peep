@@ -18,11 +18,12 @@ sheepPile.prototype = {
 
                 this.load_ground();
                 this.load_sheep("sheep", 0, 0, "right");
-
+                this.load_fps();
                 //go full screen on click
                 this.game.input.onDown.add(this.fullscreen, this);
 	},
         update: function(){
+                fpsText.text = "fps: " + this.game.time.fps;
                 this.game.physics.arcade.collide(sheeps, ground);
                 delay-=1;
                 for(var i = 0;i < sheeps.children.length;i++){ 
@@ -86,6 +87,13 @@ sheepPile.prototype = {
                 var dirt = ground.create(i, this.game.world.height - 64, 'dirt');
                 dirt.body.immovable = true;                
             }
+        },
+        load_fps: function(){
+            //FPS Text
+            this.game.time.advancedTiming = true;//advanced timeing needs to be true to get fps
+            fpsText = this.game.add.text(16, height - 48, 'fps: 0', { fontSize: '32px', fill: '#000' });
+            fpsText.fixedToCamera = true;//follow camera
         }
+
 
 }   
