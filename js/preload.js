@@ -26,7 +26,7 @@ preload.prototype = {
             //music: https://www.youtube.com/watch?v=qFQP_A4Vacc
             this.game.load.audio('music', ['res/music/music.mp3','res/music/music.ogg']);
 
-	    this.game.load.spritesheet("player","res/sprites/player.png",64,64);
+	    this.game.load.spritesheet("bopeep","res/sprites/bopeep_walk.png",128,256);
 	    this.game.load.spritesheet("sheep","res/sprites/sheep.png",128,96);
 	    this.game.load.spritesheet("playerf","res/sprites/playerf.png",128,96);
 	    this.game.load.spritesheet("playerf2","res/sprites/playerf2.png",128,96);

@@ -5,10 +5,13 @@ theGame.prototype = {
                 poem = this.game.add.audio("poem"); 
                 poem.play();
                 delay = 0;
+        
+                var world_width = 5120;
+                this.game.world.setBounds(0, 0, world_width, this.game.world.height);
                 this.game.physics.startSystem(Phaser.Physics.ARCADE);
-		var gameTitle = this.game.add.sprite(this.game.world.width * 0.5,this.game.world.height * .1,"game_title");
+		var gameTitle = this.game.add.sprite(width * 0.5,this.game.world.height * .1,"game_title");
 		gameTitle.anchor.setTo(0.5,0.5);
-		var exit_btn = this.game.add.button(this.game.world.width * 0.5,this.game.world.height * .2,"exit",this.exit,this);
+		var exit_btn = this.game.add.button(width * 0.5,this.game.world.height * .2,"exit",this.exit,this);
 		exit_btn.anchor.setTo(0.5,0.5);
 
                 ground = this.game.add.group();
@@ -19,11 +22,14 @@ theGame.prototype = {
                 this.load_ground();
                 this.load_sheep("sheep", 0, 0, "right");
 
+                this.load_player();
                 //go full screen on click
                 this.game.input.onDown.add(this.fullscreen, this);
+                this.game.input.onDown.add(this.move, this);
 	},
         update: function(){
                 this.game.physics.arcade.collide(sheeps, ground);
+                this.game.physics.arcade.collide(player, ground);
                 delay-=1;
                 for(var i = 0;i < sheeps.children.length;i++){ 
                     var sheep = sheeps.children[i];
@@ -86,6 +92,30 @@ theGame.prototype = {
                 var dirt = ground.create(i, this.game.world.height - 64, 'dirt');
                 dirt.body.immovable = true;                
             }
-        }
+        },
 
+        load_player: function(){
+            player = this.game.add.sprite(width * 0.5, this.game.world.height * 0.5, 'bopeep');
+            player.anchor.setTo(0.5,0.5);
+            this.game.physics.arcade.enable(player);
+            player.body.bounce.y = 0.2;
+            player.body.gravity.y = 300;
+            player.body.collideWorldBounds = true;   
+
+            player.animations.add('left', [0, 1, 2, 3,5,6,7], 10, true);
+            player.animations.add('right', [8,9,10,11,12,13,14,15], 10, true);
+        },
+        move: function(){
+            mouseX = this.game.input.mousePointer.position.x;
+            playerX = player.position.x;
+            if(mouseX > playerX){
+                player.body.velocity.x = 200;
+                player.animations.play('right');
+                console.log("move right");
+            }else if(mouseX < playerX){
+                player.body.velocity.x = -200;
+                player.animations.play('left');
+                console.log("move left");
+            }
+        }   
 }   
