@@ -2,6 +2,7 @@ var gameOver = function(game){}
 
 gameOver.prototype = {
   	create: function(){
+                this.game.world.setBounds(0, 0, width, height);
 		var game_over = this.game.add.button(this.game.world.width * 0.5,this.game.world.height * 0.25,"game_over",this.gameOver,this);
 		game_over.anchor.setTo(0.5,0.5);
 		var start_over = this.game.add.button(this.game.world.width * 0.5,this.game.world.height * 0.5,"start_over",this.gameOver,this);

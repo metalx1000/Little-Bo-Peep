@@ -21,9 +21,9 @@ theGame.prototype = {
                 sheeps.enableBody = true;
 
                 this.load_ground();
-                for(var i = 0;i<10;i++){
+                for(var i = 0;i<5;i++){
                     var x = Math.floor(Math.random() * world_width * 0.2);
-                    this.load_sheep("sheep", x, 0, "right");
+                    this.load_sheep("sheep", x, this.game.world.height - 256, "right");
                 }
 
                 this.load_player();
@@ -45,10 +45,14 @@ theGame.prototype = {
                 }
 
                 this.game.camera.x = player.position.x - width * 0.5;
-                this.game.physics.arcade.collide(sheeps, ground);
+                //this.game.physics.arcade.collide(sheeps, ground);
                 this.game.physics.arcade.collide(player, ground);
-                this.game.physics.arcade.overlap(player, sheeps, this.sheep_jump, null, this);
+                if(delay<0){
+                    this.game.physics.arcade.overlap(player, sheeps, this.sheep_jump, null, this);
+                    delay = 20;
+                }
                 delay-=1;
+
                 for(var i = 0;i < sheeps.children.length;i++){ 
                     var sheep = sheeps.children[i];
                     var v = Math.floor(Math.random() * 150) + 50
@@ -68,8 +72,8 @@ theGame.prototype = {
                         //this.load_sheep("sheep", 0, 0, "right");
                         sheep.animations.play('left');
                     }
-
                 }
+
         },
 	exit: function(){
                 click.play();
@@ -81,13 +85,11 @@ theGame.prototype = {
         },
 
         load_sheep: function(pl, posx, posy, direction){
-            if(delay<1){
-                delay = 0;
                 //animations
                 var sheep = sheeps.create(posx, posy, pl);
                 sheep.animations.add('left', [0, 1, 2, 3], 10, true);
                 sheep.animations.add('right', [4, 5, 6, 7], 10, true);
-                sheep.body.gravity.y = 500;
+                sheep.body.gravity.y = 1000;
                 sheep.body.bounce.y = 0.2;
                 sheep.inputEnabled = true;
                 sheep.events.onInputOver.add(this.sheep_jump,this);
@@ -100,7 +102,6 @@ theGame.prototype = {
                     sheep.animations.play('left');
                     sheep.body.velocity.x = -150;
                 }
-            }
         },
 
         sheep_jump: function(player, sheep){
