@@ -6,13 +6,14 @@ theGame.prototype = {
                 poem.play();
                 delay = 0;
         
-                var world_width = 5120;
+                var world_width = 51200;
                 this.game.world.setBounds(0, 0, world_width, this.game.world.height);
                 this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		var gameTitle = this.game.add.sprite(width * 0.5,this.game.world.height * .1,"game_title");
 		gameTitle.anchor.setTo(0.5,0.5);
-		var exit_btn = this.game.add.button(width * 0.5,this.game.world.height * .2,"exit",this.exit,this);
+		var exit_btn = this.game.add.button(width * 0.1,this.game.world.height * .1,"exit",this.exit,this);
 		exit_btn.anchor.setTo(0.5,0.5);
+                exit_btn.fixedToCamera = true;
 
                 ground = this.game.add.group();
                 ground.enableBody = true;
@@ -20,29 +21,54 @@ theGame.prototype = {
                 sheeps.enableBody = true;
 
                 this.load_ground();
-                this.load_sheep("sheep", 0, 0, "right");
+                for(var i = 0;i<10;i++){
+                    var x = Math.floor(Math.random() * world_width * 0.2);
+                    this.load_sheep("sheep", x, 0, "right");
+                }
 
                 this.load_player();
+
+                this.load_fps();
                 //go full screen on click
                 this.game.input.onDown.add(this.fullscreen, this);
                 this.game.input.onDown.add(this.move, this);
 	},
         update: function(){
+                fpsText.text = "fps: " + this.game.time.fps;
+
+                if(player.body.velocity.x > 0){
+                    player.body.velocity.x -= 1;
+                }else if(player.body.velocity.x < 0){
+                    player.body.velocity.x += 1;
+                }else if(player.body.velocity.x == 0){
+                    player.animations.stop();   
+                }
+
+                this.game.camera.x = player.position.x - width * 0.5;
                 this.game.physics.arcade.collide(sheeps, ground);
                 this.game.physics.arcade.collide(player, ground);
+                this.game.physics.arcade.overlap(player, sheeps, this.sheep_jump, null, this);
                 delay-=1;
                 for(var i = 0;i < sheeps.children.length;i++){ 
                     var sheep = sheeps.children[i];
                     var v = Math.floor(Math.random() * 150) + 50
                     if(sheep.position.x > this.game.world.width){
-                        this.load_sheep("sheep", this.game.world.width, 0, "left");
+                        //this.load_sheep("sheep", this.game.world.width, 0, "left");
                         sheep.body.velocity.x = -v;
                         sheep.animations.play('left');                    
                     }else if(sheep.position.x < 0){
-                        this.load_sheep("sheep", 0, 0, "right");
+                        //this.load_sheep("sheep", 0, 0, "right");
                         sheep.animations.play('right');
                         sheep.body.velocity.x = v;
                     }
+
+                    if(sheep.body.velocity.x > 0){
+                        sheep.animations.play('right');
+                    }else{
+                        //this.load_sheep("sheep", 0, 0, "right");
+                        sheep.animations.play('left');
+                    }
+
                 }
         },
 	exit: function(){
@@ -56,7 +82,7 @@ theGame.prototype = {
 
         load_sheep: function(pl, posx, posy, direction){
             if(delay<1){
-                delay = 200;
+                delay = 0;
                 //animations
                 var sheep = sheeps.create(posx, posy, pl);
                 sheep.animations.add('left', [0, 1, 2, 3], 10, true);
@@ -66,6 +92,7 @@ theGame.prototype = {
                 sheep.inputEnabled = true;
                 sheep.events.onInputOver.add(this.sheep_jump,this);
 
+                //console.log("Loading Sheep at " + sheep.position.x);
                 if(direction == "right"){
                     sheep.body.velocity.x = 150;
                     sheep.animations.play('right');
@@ -76,9 +103,11 @@ theGame.prototype = {
             }
         },
 
-        sheep_jump: function(sheep){
+        sheep_jump: function(player, sheep){
             var x = Math.floor(Math.random() * lamb_snd.length);
             lamb_snd[x].play();
+            var X = Math.floor(Math.random() * 1000) - 500;
+            sheep.body.velocity.x = X;
             sheep.body.velocity.y = -500;
         },
         load_ground: function(){
@@ -107,15 +136,22 @@ theGame.prototype = {
         },
         move: function(){
             mouseX = this.game.input.mousePointer.position.x;
-            playerX = player.position.x;
+            playerX = width * 0.5;
             if(mouseX > playerX){
-                player.body.velocity.x = 200;
+                player.body.velocity.x = 800;
                 player.animations.play('right');
-                console.log("move right");
+                //console.log(mouseX + ":" + playerX);
             }else if(mouseX < playerX){
-                player.body.velocity.x = -200;
+                player.body.velocity.x = -800;
                 player.animations.play('left');
-                console.log("move left");
+                //console.log(mouseX + ":" + playerX);
             }
-        }   
+        },
+
+        load_fps: function(){
+            //FPS Text
+            this.game.time.advancedTiming = true;//advanced timeing needs to be true to get fps
+            fpsText = this.game.add.text(16, height - 48, 'fps: 0', { fontSize: '32px', fill: '#000' });
+            fpsText.fixedToCamera = true;//follow camera
+        }
 }   
