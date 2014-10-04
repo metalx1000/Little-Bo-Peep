@@ -11,6 +11,7 @@
         <script src="js/gametitle.js"></script>
         <script src="js/thegame.js"></script>
         <script src="js/gameover.js"></script> 
+        <script src="js/sheeppile.js"></script> 
 
         <style>
             canvas, html, body { 
@@ -33,6 +34,7 @@
                 game.state.add("Preload",preload);
                 game.state.add("GameTitle",gameTitle);
                 game.state.add("TheGame",theGame);
+                game.state.add("sheepPile",sheepPile);
                 game.state.add("GameOver",gameOver);
                 game.state.start("Boot")
 

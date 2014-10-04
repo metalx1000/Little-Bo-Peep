@@ -32,6 +32,8 @@ preload.prototype = {
 	    this.game.load.spritesheet("playerf2","res/sprites/playerf2.png",128,96);
 
 	    this.game.load.image("play_btn","res/play_btn2.png");
+	    this.game.load.image("pile_btn","res/pile.png");
+	    this.game.load.image("main_game_btn","res/main_game_btn.png");
 	    this.game.load.image("game_title","res/game_title.png");
 	    this.game.load.image("click_me","res/click_me.png");
 	    this.game.load.image("game_over","res/game_over.png");

@@ -5,8 +5,12 @@ gameTitle.prototype = {
                 this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		var gameTitle = this.game.add.sprite(this.game.world.width * 0.5,this.game.world.height * .1,"game_title");
 		gameTitle.anchor.setTo(0.5,0.5);
-		var playButton = this.game.add.button(this.game.world.width * 0.5,this.game.world.height * .2,"play_btn",this.playTheGame,this);
-		playButton.anchor.setTo(0.5,0.5);
+
+		var playButton1 = this.game.add.button(this.game.world.width * 0.5,this.game.world.height * .3,"main_game_btn",this.playTheGame,this);
+		playButton1.anchor.setTo(0.5,0.5);
+
+		var playButton2 = this.game.add.button(this.game.world.width * 0.5,this.game.world.height * .4,"pile_btn",this.sheepPile,this);
+		playButton2.anchor.setTo(0.5,0.5);
 
                 this.create_simon();
                 //this.main_title();
@@ -27,6 +31,10 @@ gameTitle.prototype = {
         simonWeb: function(){
             window.open("http://incompetech.com", "_blank");
         },
+	sheepPile: function(){
+                click.play();
+		this.game.state.start("sheepPile");
+	},
 	playTheGame: function(){
                 click.play();
 		this.game.state.start("TheGame");
