@@ -5,7 +5,8 @@ theGame.prototype = {
                 poem = this.game.add.audio("poem"); 
                 poem.play();
                 delay = 0;
-        
+        	player_speed = 400;
+
                 var world_width = 5120;
                 this.game.world.setBounds(0, 0, world_width, this.game.world.height);
                 this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -21,7 +22,7 @@ theGame.prototype = {
                 sheeps.enableBody = true;
 
                 this.load_ground();
-                for(var i = 0;i<10;i++){
+                for(var i = 0;i<20;i++){
                     var x = Math.floor(Math.random() * world_width * 0.2);
                     this.load_sheep("sheep", x, this.game.world.height - 256, "right");
                 }
@@ -119,8 +120,8 @@ theGame.prototype = {
             }
             //dirt
             for(var i=0;i< this.game.world.width;i+=64){
-                var dirt = ground.create(i, this.game.world.height - 64, 'dirt');
-                dirt.body.immovable = true;                
+		var dirt = this.game.add.sprite(i,this.game.world.height - 64,"dirt");
+//                var dirt = ground.create(i, this.game.world.height - 64, 'dirt');
             }
         },
 
@@ -139,11 +140,11 @@ theGame.prototype = {
             mouseX = this.game.input.mousePointer.position.x;
             playerX = width * 0.5;
             if(mouseX > playerX){
-                player.body.velocity.x = 800;
+                player.body.velocity.x = player_speed;
                 player.animations.play('right');
                 //console.log(mouseX + ":" + playerX);
             }else if(mouseX < playerX){
-                player.body.velocity.x = -800;
+                player.body.velocity.x = -player_speed;
                 player.animations.play('left');
                 //console.log(mouseX + ":" + playerX);
             }

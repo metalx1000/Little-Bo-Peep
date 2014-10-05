@@ -78,14 +78,14 @@ sheepPile.prototype = {
         },
         load_ground: function(){
             //grass
-            for(var i=0;i< this.game.world.width;i+=64){
+            for(var i=0;i< this.game.world.width;i+=1280){
                 var grass = ground.create(i, this.game.world.height - 128, 'grass');
-                grass.body.immovable = true;                
+                grass.body.immovable = true;
             }
             //dirt
             for(var i=0;i< this.game.world.width;i+=64){
-                var dirt = ground.create(i, this.game.world.height - 64, 'dirt');
-                dirt.body.immovable = true;                
+                var dirt = this.game.add.sprite(i,this.game.world.height - 64,"dirt");
+//                var dirt = ground.create(i, this.game.world.height - 64, 'dirt');
             }
         },
         load_fps: function(){
