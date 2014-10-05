@@ -17,7 +17,7 @@ gameTitle.prototype = {
                 this.load_sheep("sheep", this.game.world.width * 0.2, -100, "right");
 
                 //go full screen on click
-                this.game.input.onDown.add(this.fullscreen, this);
+                //this.game.input.onDown.add(this.fullscreen, this);
 	},
         update: function(){
                 this.game.physics.arcade.collide(sheep, simon);
@@ -33,10 +33,12 @@ gameTitle.prototype = {
         },
 	sheepPile: function(){
                 click.play();
+                this.fullscreen();
 		this.game.state.start("sheepPile");
 	},
 	playTheGame: function(){
                 click.play();
+                this.fullscreen();
 		this.game.state.start("TheGame");
 	},
         fullscreen: function(){
