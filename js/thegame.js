@@ -113,7 +113,7 @@ theGame.prototype = {
         },
         load_ground: function(){
             //grass
-            for(var i=0;i< this.game.world.width;i+=64){
+            for(var i=0;i< this.game.world.width;i+=1280){
                 var grass = ground.create(i, this.game.world.height - 128, 'grass');
                 grass.body.immovable = true;                
             }
