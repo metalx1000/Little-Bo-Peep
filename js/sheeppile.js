@@ -2,7 +2,7 @@ var sheepPile = function(game){}
 
 sheepPile.prototype = {
   	create: function(){
-                poem = this.game.add.audio("poem"); 
+                poem = this.game.add.audio("poem2"); 
                 poem.play();
                 delay = 0;
                 this.game.physics.startSystem(Phaser.Physics.ARCADE);
