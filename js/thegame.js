@@ -137,7 +137,7 @@ theGame.prototype = {
             player.animations.add('right', [8,9,10,11,12,13,14,15], 10, true);
         },
         move: function(){
-            mouseX = this.game.input.mousePointer.position.x;
+            mouseX = this.game.input.x;
             playerX = width * 0.5;
             if(mouseX > playerX){
                 player.body.velocity.x = player_speed;
